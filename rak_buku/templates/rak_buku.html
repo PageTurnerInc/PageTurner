@@ -1,125 +1,80 @@
-{% extends 'base.html' %}
+{% extends 'logged-in-navbar.html' %}
 {% load static %}
 
-{% block meta %}
-{% endblock meta %}
-
-{% block content %}
-<style>
-    @font-face {
-                font-family: 'LeagueSpartan Medium';
-                src: url("{% static 'font/LeagueSpartan-Medium.ttf' %}");
-            }
-
-    @font-face {
-        font-family: 'LeagueSpartan Thin';
-        src: url("{% static 'font/LeagueSpartan-Thin.ttf' %}");
-    }
-</style>
-<nav class="navbar navbar-expand-lg bg-light bg-gradient fixed-top">
-    <div class="container-fluid mx-5">
-        <span class="navbar-brand mb-0 h1">PageTurner</span>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active mb-0" href="{% url 'katalog_buku:show_katalog' %}">Catalogue</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active mb-0" href="{% url 'daftar_belanja:owned_books' %}">My Books</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active mb-0" href="{% url 'daftar_belanja:shopping_cart' %}">Shopping Cart</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active mb-0" href="{% url 'rak_buku:show_rak' %}">Library</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active mb-0" href="{% url 'wishlist:show_wishlist' %}">Wishlist</a>
-                </li>
-            </ul>
-        </div>
-        <a href="{% url 'main:logout_user' %}" style="text-decoration: none;">
-            <button class="btn btn-outline-danger ms-3 me-2">Logout</button>
-        </a>
-        <form class="d-flex ms-2 me-5" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-    </div>
-</nav>
+{% block content-2 %}
 <body>
-<br>
-<br>
-<div style="padding: 40px;">
-  <div class="card p-0">
-    <div class="d-flex flex-row">
-      <img src="https://imgtr.ee/images/2023/10/27/538d8ef9d1a3e50e42b9c8709a408280.jpeg" style="width: 12rem; padding: 20px;" alt="...">
-    <div class="card-body">
-      <h5 class="card-title" style="font-family: 'LeagueSpartan Medium'; letter-spacing: 3px; font-size: 32px;">{{ name }}</h5>
-      <p class="card-text" style= "font-family: 'LeagueSpartan Thin'; letter-spacing: 3px; font-size: 20px;">{{ description }}</p>
-      <p class="card-text"><small class="text-body-secondary">Created by: {{ user }}</small></p>
-        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
-        <a href="{% url 'rak_buku:delete_rak' rak.pk%}" style="text-decoration: none;">
-          <button class="btn btn-outline-danger ms-3 me-2">Delete Library</button>
-      </a>
+    <br>
+    <br>
+    <div style="padding: 40px;">
+        <div class="card p-0">
+            <div class="d-flex flex-row">
+                <img src="https://imgtr.ee/images/2023/10/27/538d8ef9d1a3e50e42b9c8709a408280.jpeg" style="width: 12rem; padding: 20px;" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" style="font-family: 'LeagueSpartan Medium'; letter-spacing: 3px; font-size: 32px;">{{ name }}</h5>
+                    <p class="card-text" style= "font-family: 'LeagueSpartan Thin'; letter-spacing: 3px; font-size: 20px;">{{ description }}</p>
+                    <p class="card-text"><small class="text-body-secondary">Created by: {{ user }}</small></p>
+                    <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+                    <a href="{% url 'rak_buku:delete_rak' rak.pk%}" style="text-decoration: none;">
+                        <button class="btn btn-outline-danger ms-3 me-2">Delete Library</button>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Library</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" method="post" action="{% url 'rak_buku:edit_rak' id=rak.pk %}">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ rak.name }}"></input>
+                        </div>
+                        <div class="mb-4">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description">{{ rak.description }}</textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="button_edit">Edit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Library</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form id="form" method="post" action="{% url 'rak_buku:edit_rak' id=rak.pk %}">
-                  {% csrf_token %}
-                  <div class="mb-4">
-                      <label for="name" class="col-form-label">Name:</label>
-                      <input type="text" class="form-control" id="name" name="name" value="{{ rak.name }}"></input>
-                  </div>
-                  <div class="mb-4">
-                      <label for="description" class="col-form-label">Description:</label>
-                      <textarea class="form-control" id="description" name="description">{{ rak.description }}</textarea>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary" id="button_edit">Edit</button>
-                  </div>
-              </form>
-          </div>
-      </div>
-  </div>
-</div>
-<div style="padding: 0px 40px 0px 40px;">
-  <table class="table" style="vertical-align: middle; ">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Judul</th>
-            <th scope="col">Penulis</th>
-            <th scope="col">Tahun</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in books %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ item.book_title }}</td>
-            <td>{{ item.book_author }}</td>
-            <td>{{ item.year_of_publication }}</td>
-            <td style="text-align: right;"><a href="{% url 'rak_buku:delete_book' rak_id=rak.pk book_id=item.pk %}">
-              <button class="btn btn-outline-danger ms-3 me-2">Delete</button
-            </a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+
+    <div style="padding: 0px 40px 0px 40px;">
+        <table class="table" style="vertical-align: middle; ">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Judul</th>
+                    <th scope="col">Penulis</th>
+                    <th scope="col">Tahun</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in books %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.book_title }}</td>
+                    <td>{{ item.book_author }}</td>
+                    <td>{{ item.year_of_publication }}</td>
+                    <td style="text-align: right;"><a href="{% url 'rak_buku:delete_book' rak_id=rak.pk book_id=item.pk %}">
+                    <button class="btn btn-outline-danger ms-3 me-2">Delete</button
+                    </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
-{% endblock content %}
+{% endblock content-2 %}

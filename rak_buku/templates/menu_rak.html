@@ -1,182 +1,139 @@
-{% extends 'base.html' %}
+{% extends 'logged-in-navbar.html' %}
 {% load static %}
 
-{% block meta %}
-{% endblock meta %}
-
-{% block content %}
-<style>
-    #image {
-        background: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85) ), url(https://cdn.fstoppers.com/styles/full/s3/photos/2019/05/e1c586532fcb6672fac6d7a8cfa7a1b8.jpg?itok=t9H-u__W);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-        height: auto;
-    }
-    @font-face {
-                font-family: 'LeagueSpartan Medium';
-                src: url("{% static 'font/LeagueSpartan-Medium.ttf' %}");
-            }
-
-    @font-face {
-        font-family: 'LeagueSpartan Thin';
-        src: url("{% static 'font/LeagueSpartan-Thin.ttf' %}");
-    }
-</style>
-<nav class="navbar navbar-expand-lg bg-light bg-gradient fixed-top">
-    <div class="container-fluid mx-5">
-        <span class="navbar-brand mb-0 h1">PageTurner</span>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active mb-0" href="{% url 'katalog_buku:show_katalog' %}">Catalogue</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active mb-0" href="{% url 'daftar_belanja:owned_books' %}">My Books</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active mb-0" href="{% url 'daftar_belanja:shopping_cart' %}">Shopping Cart</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active mb-0" href="{% url 'rak_buku:show_rak' %}">Library</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active mb-0" href="{% url 'wishlist:show_wishlist' %}">Wishlist</a>
-                </li>
-            </ul>
-        </div>
-        <a href="{% url 'main:logout_user' %}" style="text-decoration: none;">
-            <button class="btn btn-outline-danger ms-3 me-2">Logout</button>
-        </a>
-        <form class="d-flex ms-2 me-5" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-    </div>
-</nav>
-<br>
-<div class="container-flex mt-5">
-    <div class="d-flex mb-4 gap-3">
-        <div class="d-flex">
-        <h1 class="display-1 text-dark text-center my-0 mx-5" style="font-family: 'LeagueSpartan Medium'; letter-spacing: 3px; font-size: 3vw;">Your Library</h1>
-        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Library</button>
-        </div>
-    </div>
-    <div id="image">
-        <div id="list_rak"></div>
-    <hr class="mb-4 mt-4">
-    <div class="d-flex mb-4 gap-3" style="background-color: white;">
-        <div class="d-flex mb-4 mt-4" style="background-color: white;">
-            <h1 class="display-1 text-dark text-center my-0 mx-5" style="font-family: 'LeagueSpartan Medium'; letter-spacing: 3px; font-size: 3vw;">Library Recommendation</h1>
-            </div>
-    </div>
-        {% if user.is_premium == "Y" %}
-        <div class="row row-cols-1 row-cols-md-6 g-4 mx-5">
-            {% for rak in all_rak %}
-            <a href="{{ rak.pk }}" style="text-decoration: none; color: inherit">
-            <div class="col">
-            <div class="card p-0" style="width: 12rem;">
-                <img src="https://imgtr.ee/images/2023/10/27/538d8ef9d1a3e50e42b9c8709a408280.jpeg" class="card-img-top" alt="...">
-                <div class="card-footer" style="font-family: 'LeagueSpartan Medium';">{{ rak.name }}</div>
-            </div>
-            </div>
-            </a>
-            {% endfor %}
-        <div class="mb-4"></div>
-        {% else %}
-        <div class="container" style="padding: 100px;">
-            <h1 class="pb-4" style= "font-family: 'LeagueSpartan Thin'; letter-spacing: 3px; font-size: 2vw; color: white; padding: 100px 100px 0px 40px; margin: 0px 0px 0px 40px;">Upgrade your account to Premium to see other users' libraries</h1>
-        </div>
-        {% endif %}
-        
-        </div>
-</div>
-</div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Library</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="form" onsubmit="return false;">
-                    {% csrf_token %}
-                    <div class="mb-4">
-                        <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name"></input>
-                    </div>
-                    <div class="mb-4">
-                        <label for "description" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="description" name="description"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    async function getRak() {
-        return fetch("{% url 'rak_buku:get_rak_json' %}").then((res) => res.json());
-    }
-
-    async function refreshRak() {
-        document.getElementById("list_rak").innerHTML = "";
-        const rak = await getRak();
-        let htmlString = '';
-        
-        if (rak.length > 0) {
-            htmlString += '<div class="row row-cols-1 row-cols-md-6 g-4 mx-5 mt-4">';
-            
-            rak.forEach((item) => {
-                htmlString += `
-                    <a href="${item.pk}" style="text-decoration: none; color: inherit">
-                        <div class="col">
-                            <div class="card">
-                                <img src="https://imgtr.ee/images/2023/10/27/538d8ef9d1a3e50e42b9c8709a408280.jpeg" class="card-img-top" alt="...">
-                                <div class="card-footer"class="card-text" style="font-family: 'LeagueSpartan Medium';">${item.fields.name}</div>
-                            </div>
-                        </div>
-                    </a>
-                `;
-            });
-            
-            htmlString += '</div>';
-        } else {
-            htmlString += `
-                <div class="container" style="padding: 100px;">
-                    <h1 class="pb-4" style="font-family: 'LeagueSpartan Thin'; letter-spacing: 3px; font-size: 2vw; color: white; padding: 100px 100px 0px 40px; margin: 0px 0px 0px 40px;">You don't have a library. Create one!</h1>
-                </div>
-            `;
+{% block meta-2 %}
+    <style>
+        #image {
+            background: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85) ), url(https://cdn.fstoppers.com/styles/full/s3/photos/2019/05/e1c586532fcb6672fac6d7a8cfa7a1b8.jpg?itok=t9H-u__W);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            height: auto;
         }
-        
-        document.getElementById("list_rak").innerHTML = htmlString;
-    }
+    </style>
+{% endblock meta-2 %}
+
+{% block content-2 %}
+    <br>
+    <div class="container-flex mt-5">
+        <div class="d-flex mb-4 gap-3">
+            <div class="d-flex">
+                <h1 class="display-1 text-dark text-center my-0 mx-5" style="font-family: 'LeagueSpartan Medium'; letter-spacing: 3px; font-size: 3vw;">Your Library</h1>
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Library</button>
+            </div>
+        </div>
+        <div id="image">
+            <div id="list_rak"></div>
+                <hr class="mb-4 mt-4">
+                <div class="d-flex mb-4 gap-3" style="background-color: white;">
+                    <div class="d-flex mb-4 mt-4" style="background-color: white;">
+                        <h1 class="display-1 text-dark text-center my-0 mx-5" style="font-family: 'LeagueSpartan Medium'; letter-spacing: 3px; font-size: 3vw;">Library Recommendation</h1>
+                    </div>
+                </div>
+                {% if user.is_premium == "Y" %}
+                    <div class="row row-cols-1 row-cols-md-6 g-4 mx-5">
+                        {% for rak in all_rak %}
+                            <a href="{{ rak.pk }}" style="text-decoration: none; color: inherit">
+                                <div class="col">
+                                    <div class="card p-0" style="width: 12rem;">
+                                        <img src="https://imgtr.ee/images/2023/10/27/538d8ef9d1a3e50e42b9c8709a408280.jpeg" class="card-img-top" alt="...">
+                                        <div class="card-footer" style="font-family: 'LeagueSpartan Medium';">{{ rak.name }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                        <div class="mb-4"></div>
+                    </div>
+                {% else %}
+                    <div class="container" style="padding: 100px;">
+                        <h1 class="pb-4" style= "font-family: 'LeagueSpartan Thin'; letter-spacing: 3px; font-size: 2vw; color: white; padding: 100px 100px 0px 40px; margin: 0px 0px 0px 40px;">Upgrade your account to Premium to see other users' libraries</h1>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Library</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+                        <div class="mb-4">
+                            <label for "description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function getRak() {
+            return fetch("{% url 'rak_buku:get_rak_json' %}").then((res) => res.json());
+        }
+
+        async function refreshRak() {
+            document.getElementById("list_rak").innerHTML = "";
+            const rak = await getRak();
+            let htmlString = '';
+            
+            if (rak.length > 0) {
+                htmlString += '<div class="row row-cols-1 row-cols-md-6 g-4 mx-5 mt-4">';
+                
+                rak.forEach((item) => {
+                    htmlString += `
+                        <a href="${item.pk}" style="text-decoration: none; color: inherit">
+                            <div class="col">
+                                <div class="card">
+                                    <img src="https://imgtr.ee/images/2023/10/27/538d8ef9d1a3e50e42b9c8709a408280.jpeg" class="card-img-top" alt="...">
+                                    <div class="card-footer"class="card-text" style="font-family: 'LeagueSpartan Medium';">${item.fields.name}</div>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+                
+                htmlString += '</div>';
+            } else {
+                htmlString += `
+                    <div class="container" style="padding: 100px;">
+                        <h1 class="pb-4" style="font-family: 'LeagueSpartan Thin'; letter-spacing: 3px; font-size: 2vw; color: white; padding: 100px 100px 0px 40px; margin: 0px 0px 0px 40px;">You don't have a library. Create one!</h1>
+                    </div>
+                `;
+            }
+            
+            document.getElementById("list_rak").innerHTML = htmlString;
+        }
 
 
-    refreshRak();
+        refreshRak();
 
-    function addRak() {
-        fetch("{% url 'rak_buku:add_rak_ajax' %}", {
-            method: "POST",
-            body: new FormData(document.querySelector('#form'))
-        }).then(refreshRak)
+        function addRak() {
+            fetch("{% url 'rak_buku:add_rak_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshRak)
 
-        document.getElementById("form").reset()
-        return false
-    }
+            document.getElementById("form").reset()
+            return false
+        }
 
-    document.getElementById("button_add").onclick = addRak
-</script>
+        document.getElementById("button_add").onclick = addRak
+    </script>
 
-{% endblock content %}
+{% endblock content-2 %}

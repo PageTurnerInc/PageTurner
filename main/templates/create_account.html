@@ -1,105 +1,100 @@
-{% extends 'base.html' %}
+{% extends 'logged-out-navbar.html' %}
 {% load static %}
 
-{% block meta %}
+{% block meta-2 %}
+    <title>Register</title>
 
-<title>Register</title>
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #fff;
-        /* background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1)),
-                            url(https://i.pinimg.com/originals/82/74/72/827472c996956ff73ca44addd4ced98f.png); */
-        color: #2d2d2d;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
+    <style>
+        body {
+            background-color: #fff;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1)),
+                                url("https://i.pinimg.com/originals/82/74/72/827472c996956ff73ca44addd4ced98f.png");
+            color: #2d2d2d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-    .register {
-        width: 50%;
-        min-width: 400px;
-        padding: 20px;
-        background-color: rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        display: block;
-        margin: 0 auto;
-    }
+        .register {
+            width: 50%;
+            min-width: 400px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: block;
+            margin: 0 auto;
+        }
 
-    h1 {
-        padding: 20px;
-        text-align: center;
-        font-weight: bold;
-    }
+        h1 {
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        margin: 5px 0 5px 20px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-    }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 5px 20px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
 
-    input[type="submit"], .login {
-        width: 72%;
-        background-color: #1a3891;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-align: center;
-        margin: 5px 5px 5px 5px;
-    }
+        input[type="submit"], .login {
+            width: 72%;
+            background-color: #1a3891;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            margin: 5px 5px 5px 5px;
+        }
 
-    input[type="submit"]:hover, .login:hover {
-        background-color: #2959e6;
-    }
+        input[type="submit"]:hover, .login:hover {
+            background-color: #2959e6;
+        }
 
-    ul {
-        display: none;
-        list-style: none;
-        padding: 0;
-    }
+        /* ul {
+            display: none;
+            list-style: none;
+            padding: 0;
+        }
 
-    ul li {
-        display: none;
-        color: red;
-        margin-left: 15px;
-    }
+        ul li {
+            display: none;
+            color: red;
+            margin-left: 15px;
+        } */
 
-    .back-to-login {
-        margin: 20px 0 20px 189px;
-        width:350px;
-    }
+        .back-to-login {
+            margin: 20px 0 20px 189px;
+            width:350px;
+        }
 
-    .login {
-        width: 347px;
-        margin: 20px 0 20px 0;
-        text-align: center;
-    }
+        .login {
+            width: 347px;
+            margin: 20px 0 20px 0;
+            text-align: center;
+        }
 
-    p {
-        text-align: center;
-        margin-top: 20px;
-    }
-</style>
-    
-{% endblock meta %}
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+{% endblock meta-2 %}
 
-{% block content %}  
-
-<div class = "register">
-    
-    <h1>Register</h1>  
+{% block content-2 %}
+    <!-- Register Card -->
+    <div class = "register">
+        <h1>Register</h1>
 
         <form method="POST" >  
             {% csrf_token %}  
@@ -117,15 +112,14 @@
                     Login
                 </button>
         </a>
+        
+        {% if messages %}  
+            <ul class="error-messages">   
+                {% for message in messages %}  
+                    <li class="error-message">{{ message }}</li>  
+                    {% endfor %}  
+            </ul>   
+        {% endif %}
+    </div>  
 
-    {% if messages %}  
-        <ul class="error-messages">   
-            {% for message in messages %}  
-                <li class="error-message">{{ message }}</li>  
-                {% endfor %}  
-        </ul>   
-    {% endif %}
-
-</div>  
-
-{% endblock content %}
+{% endblock content-2 %}

@@ -1,123 +1,128 @@
-{% extends 'base.html' %}
+{% extends 'logged-in-navbar.html' %}
 {% load static %}
 
-{% block content %}
-<title>Ratings & Reviews</title>
+{% block meta-2 %}
+    <title>Ratings & Reviews</title>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"  rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"  rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-<style>
-    .star-widget label{
-        font-size: 30px;
-        color: #c4c4c4;
-        padding: 10px;
-        /* float: right; */
-        transition: all 0.2s ease;
-    }
-
-    .star-widget input:not(:checked) ~ label:hover,
-    .star-widget input:not(:checked) ~ label:hover ~ label{
-        color: #fd4;
-    }
-    .star-widget input:checked ~ label{
-        color: #fd4;
-    }
-    .star-ratings {
-        unicode-bidi: bidi-override;
-        color: #b6b4b4;
-        font-size: 32px;
-        position: relative;
-        margin: 0;
-        padding: 0;
-        .fill-ratings {
+    <style>
+        .star-widget label{
+            font-size: 30px;
+            color: #c4c4c4;
+            padding: 10px;
+            /* float: right; */
+            transition: all 0.2s ease;
+        }
+    
+        .star-widget input:not(:checked) ~ label:hover,
+        .star-widget input:not(:checked) ~ label:hover ~ label{
             color: #fd4;
+        }
+        .star-widget input:checked ~ label{
+            color: #fd4;
+        }
+        .star-ratings {
+            unicode-bidi: bidi-override;
+            color: #b6b4b4;
+            font-size: 32px;
+            position: relative;
+            margin: 0;
             padding: 0;
-            position: absolute;
-            z-index: 1;
-            display: block;
-            top: 0;
-            left: 0;
-            overflow: hidden;
-            
-            span {
-                display: inline-block;
+            .fill-ratings {
+                color: #fd4;
+                padding: 0;
+                position: absolute;
+                z-index: 1;
+                display: block;
+                top: 0;
+                left: 0;
+                overflow: hidden;
+                
+                span {
+                    display: inline-block;
+                }
+            }
+            .empty-ratings {
+                padding: 0;
+                display: block;
+                z-index: 0;
             }
         }
-        .empty-ratings {
-            padding: 0;
-            display: block;
-            z-index: 0;
-        }
-    }
+    
+    </style>
+{% endblock meta-2 %}
 
-</style>
 
-{% include 'navbar.html' %}
+{% block content-2 %}
+    <div class="container" style="height: 56px;">
+    </div>
 
-<div class="container-fluid bg-secondary py-4 bg-gradient" style="min-height: 70px;">
-    <div class="mx-5">
-        <div class="pb-4">
-            <a class="btn btn-outline-warning" href="{% url 'katalog_buku:show_book' book.id %}">
-                <h6 class="text-white" style="display: inline;">
-                    <i class="fa fa-angle-left" aria-hidden="true"></i>
-                    Back
-                </h6>
-            </a>
-        </div>
+    <div class="container-fluid bg-secondary py-4 bg-gradient" style="min-height: 70px;">
+        <div class="mx-5">
+            <div class="pb-4">
+                <a class="btn btn-outline-warning" href="{% url 'katalog_buku:show_book' book.id %}">
+                    <h6 class="text-white" style="display: inline;">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        Back
+                    </h6>
+                </a>
+            </div>
 
-        <div class="d-flex">
-            <a href="{% url 'katalog_buku:show_book' book.id %}" class="pe-2">
-                <img src="{{ book.image_url_l }}" style="width: 89px; height: 132px;" alt="...">
-            </a>
-            <div>
-                <h5 class="text-light">
-                    {{ book.book_title }}
-                </h5>
-                <h6 class="text-light">
-                    By {{ book.book_author }}
-                </h6>
-                <h4>
-                    Reviews & Ratings
-                </h4>
+            <div class="d-flex">
+                <a href="{% url 'katalog_buku:show_book' book.id %}" class="pe-2">
+                    <img src="{{ book.image_url_l }}" style="width: 89px; height: 132px;" alt="...">
+                </a>
+                <div>
+                    <h5 class="text-light">
+                        {{ book.book_title }}
+                    </h5>
+                    <h6 class="text-light">
+                        By {{ book.book_author }}
+                    </h6>
+                    <h4>
+                        Reviews & Ratings
+                    </h4>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container-fluid py-4">
-    <div class="mx-5">
-        <div class="pb-4">
-            <h3 style="display: inline;">
-                <i class="fa fa-angle-right" aria-hidden="true" style="color: #F5C518;"></i>
-                PageTurner Rating
-            </h3>
-            <p class="text-secondary">Average rating from PageTurner users</p>
-            <div>
+    <div class="container-fluid py-4">
+        <div class="mx-5">
+            <div class="pb-4">
+                <h3 style="display: inline;">
+                    <i class="fa fa-angle-right" aria-hidden="true" style="color: #F5C518;"></i>
+                    PageTurner Rating
+                </h3>
+                <p class="text-secondary">Average rating from PageTurner users</p>
                 <div>
-                    <p style="font-weight: bold;">PageTurner Rating</p>
-                    <div class="d-flex">
-                        <h1 class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </h1>
-                        <div>
-                            <h5 id="rating-of-book"></h5>
-                            <p id="review-count" class="text-secondary"></p>
+                    <div>
+                        <p style="font-weight: bold;">PageTurner Rating</p>
+                        <div class="d-flex">
+                            <h1 class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </h1>
+                            <div>
+                                <h5 id="rating-of-book"></h5>
+                                <p id="review-count" class="text-secondary"></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="pt-2">
-                    <p style="font-weight: bold;">Your Rating</p>
-                    <div class="d-flex">
-                        <h1 class="pe-2">
-                            <i class="fas fa-star pe-1" id="user-star" aria-hidden="true"></i>
-                        </h1>
-                        <div>
-                            <h5 id="rating-of-book-user">? / 5</h5>
-                            <div id="user-action">
+                    <div class="pt-2">
+                        <p style="font-weight: bold;">Your Rating</p>
+                        <div class="d-flex">
+                            <h1 class="pe-2">
+                                <i class="fas fa-star pe-1" id="user-star" aria-hidden="true"></i>
+                            </h1>
+                            <div>
+                                <h5 id="rating-of-book-user">? / 5</h5>
+                                <div id="user-action">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -125,599 +130,598 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="container-fluid py-4">
-    <div class="mx-5">
-        <div class="pb-4">
-            <h3 style="display: inline;">
-                <i class="fa fa-angle-right" aria-hidden="true" style="color: #F5C518;"></i>
-                Other Users' Ratings & Reviews
-            </h3>
-            <p class="text-secondary">Check out others' ratings & reviews</p>
-            <div class="py-2">
-                <button onclick="refreshReviewsByRating(5);" type="button" class="btn btn-outline-warning text-dark ">
-                    <div class="d-flex">
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2" id="jumlah-5">
-                            5 / 5 (Excellent)
-                        </p>
-                    </div>
-                </button>
-            </div>
-            <div class="py-2">
-                <button onclick="refreshReviewsByRating(4);" type="button" class="btn btn-outline-warning text-dark ">
-                    <div class="d-flex">
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
-                        </p>
-                        <p class="pe-2" id="jumlah-4">
-                            4 / 5 (Good)
-                        </p>
-                    </div>
-                </button>
-            </div>
-            <div class="py-2">
-                <button onclick="refreshReviewsByRating(3);" type="button" class="btn btn-outline-warning text-dark ">
-                    <div class="d-flex">
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
-                        </p>
-                        <p class="pe-2" id="jumlah-3">
-                            3 / 5 (Average)
-                        </p>
-                    </div>
-                </button>
-            </div>
-            <div class="py-2">
-                <button onclick="refreshReviewsByRating(2);" type="button" class="btn btn-outline-warning text-dark ">
-                    <div class="d-flex">
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
-                        </p>
-                        <p class="pe-2" id="jumlah-2">
-                            2 / 5 (Below Average)
-                        </p>
-                    </div>
-                </button>
-            </div>
-            <div class="py-2">
-                <button onclick="refreshReviewsByRating(1);" type="button" class="btn btn-outline-warning text-dark ">
-                    <div class="d-flex">
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
-                        </p>
-                        <p class="pe-2">
-                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
-                        </p>
-                        <p class="pe-2" id="jumlah-1">
-                            1 / 5 (Bad)
-                        </p>
-                    </div>
-                </button>
-            </div>
-
-            <div class="py-2">
-                <button type="button" class="btn btn-outline-primary" onclick="refreshReviews()">
-                    Reset Search Parameters
-                </button>
-            </div>
-
-        </div>
-        <div id="review-card"></div>
-    </div>
-</div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Create Review</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>  
-        <div class="modal-body">
-            <form id="form" onsubmit="return false;">
-                {% csrf_token %}
-                <div class="star-widget" style="direction: rtl; text-align: center;">
-                    <input class="form-check-input d-none" type="radio" name="rating" id="rating5" value="5" required>
-                    <label class="form-check-label fas fa-star cursor-pointer" for="rating5" title="Excellent"></label>
-
-                    <input class="form-check-input d-none" type="radio" name="rating" id="rating4" value="4" required>
-                    <label class="form-check-label fas fa-star cursor-pointer" for="rating4" title="Good"></label>
-
-                    <input class="form-check-input d-none" type="radio" name="rating" id="rating3" value="3" required>
-                    <label class="form-check-label fas fa-star cursor-pointer" for="rating3" title="Average"></label>
-
-                    <input class="form-check-input d-none" type="radio" name="rating" id="rating2" value="2" required>
-                    <label class="form-check-label fas fa-star cursor-pointer" for="rating2" title="Below Average"></label>
-                    
-                    <input class="form-check-input d-none" type="radio" name="rating" id="rating1" value="1" required>
-                    <label class="form-check-label fas fa-star cursor-pointer" for="rating1" title="Bad"></label>
-                    
+    <div class="container-fluid py-4">
+        <div class="mx-5">
+            <div class="pb-4">
+                <h3 style="display: inline;">
+                    <i class="fa fa-angle-right" aria-hidden="true" style="color: #F5C518;"></i>
+                    Other Users' Ratings & Reviews
+                </h3>
+                <p class="text-secondary">Check out others' ratings & reviews</p>
+                <div class="py-2">
+                    <button onclick="refreshReviewsByRating(5);" type="button" class="btn btn-outline-warning text-dark ">
+                        <div class="d-flex">
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2" id="jumlah-5">
+                                5 / 5 (Excellent)
+                            </p>
+                        </div>
+                    </button>
+                </div>
+                <div class="py-2">
+                    <button onclick="refreshReviewsByRating(4);" type="button" class="btn btn-outline-warning text-dark ">
+                        <div class="d-flex">
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
+                            </p>
+                            <p class="pe-2" id="jumlah-4">
+                                4 / 5 (Good)
+                            </p>
+                        </div>
+                    </button>
+                </div>
+                <div class="py-2">
+                    <button onclick="refreshReviewsByRating(3);" type="button" class="btn btn-outline-warning text-dark ">
+                        <div class="d-flex">
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
+                            </p>
+                            <p class="pe-2" id="jumlah-3">
+                                3 / 5 (Average)
+                            </p>
+                        </div>
+                    </button>
+                </div>
+                <div class="py-2">
+                    <button onclick="refreshReviewsByRating(2);" type="button" class="btn btn-outline-warning text-dark ">
+                        <div class="d-flex">
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
+                            </p>
+                            <p class="pe-2" id="jumlah-2">
+                                2 / 5 (Below Average)
+                            </p>
+                        </div>
+                    </button>
+                </div>
+                <div class="py-2">
+                    <button onclick="refreshReviewsByRating(1);" type="button" class="btn btn-outline-warning text-dark ">
+                        <div class="d-flex">
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
+                            </p>
+                            <p class="pe-2">
+                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #212529;"></i>
+                            </p>
+                            <p class="pe-2" id="jumlah-1">
+                                1 / 5 (Bad)
+                            </p>
+                        </div>
+                    </button>
                 </div>
 
-                <div class="mb-3 mt-3">
-                    <label for="description" class="col-form-label">Comments:</label>
-                    <textarea class="form-control" id="comment" name="comment"></textarea>
+                <div class="py-2">
+                    <button type="button" class="btn btn-outline-primary" onclick="refreshReviews()">
+                        Reset Search Parameters
+                    </button>
                 </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="button-close">Cancel</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="button-add">Create</button>
-        </div>
+
+            </div>
+            <div id="review-card"></div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="updateModalLabel">Edit Review</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>  
-        <div class="modal-body">
-            <form id="form-edit" onsubmit="return false;">
-                {% csrf_token %}
-                <div class="star-widget" style="direction: rtl; text-align: center;">
-                    <input class="form-check-input d-none" type="radio" name="new-rating" id="new-rating5" value="5">
-                    <label class="form-check-label fas fa-star cursor-pointer" for="new-rating5" title="Excellent"></label>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Review</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>  
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="star-widget" style="direction: rtl; text-align: center;">
+                        <input class="form-check-input d-none" type="radio" name="rating" id="rating5" value="5" required>
+                        <label class="form-check-label fas fa-star cursor-pointer" for="rating5" title="Excellent"></label>
 
-                    <input class="form-check-input d-none" type="radio" name="new-rating" id="new-rating4" value="4">
-                    <label class="form-check-label fas fa-star cursor-pointer" for="new-rating4" title="Good"></label>
+                        <input class="form-check-input d-none" type="radio" name="rating" id="rating4" value="4" required>
+                        <label class="form-check-label fas fa-star cursor-pointer" for="rating4" title="Good"></label>
 
-                    <input class="form-check-input d-none" type="radio" name="new-rating" id="new-rating3" value="3">
-                    <label class="form-check-label fas fa-star cursor-pointer" for="new-rating3" title="Average"></label>
+                        <input class="form-check-input d-none" type="radio" name="rating" id="rating3" value="3" required>
+                        <label class="form-check-label fas fa-star cursor-pointer" for="rating3" title="Average"></label>
 
-                    <input class="form-check-input d-none" type="radio" name="new-rating" id="new-rating2" value="2">
-                    <label class="form-check-label fas fa-star cursor-pointer" for="new-rating2" title="Below Average"></label>
-                    
-                    <input class="form-check-input d-none" type="radio" name="new-rating" id="new-rating1" value="1">
-                    <label class="form-check-label fas fa-star cursor-pointer" for="new-rating1" title="Bad"></label>
-                    
-                </div>
-
-                <div class="mb-3 mt-3">
-                    <label for="description" class="col-form-label">Comments:</label>
-                    <textarea class="form-control" id="new-comment" name="new-comment"></textarea>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="button-close-edit">Cancel</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="button-update">Edit</button>
-        </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="myReviewModal" tabindex="-1" aria-labelledby="myReviewModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="myReviewModalLabel">Your Review</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>  
-        <div class="modal-body">
-            <form id="form" onsubmit="return false;">
-                <p id="user-created-on" style="text-align: left;" class="pb-2 text-secondary">
-                </p>
-                <div class="d-flex justify-content-center">
-                    <h1 class="pe-2">
-                        <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                    </h1>
-                    <div>
-                        <h5 id="rating-from-user"></h5>
-                        <p id="user-rating-status"></p>
+                        <input class="form-check-input d-none" type="radio" name="rating" id="rating2" value="2" required>
+                        <label class="form-check-label fas fa-star cursor-pointer" for="rating2" title="Below Average"></label>
+                        
+                        <input class="form-check-input d-none" type="radio" name="rating" id="rating1" value="1" required>
+                        <label class="form-check-label fas fa-star cursor-pointer" for="rating1" title="Bad"></label>
+                        
                     </div>
-                </div>
 
-                <div class="mb-3 mt-3">
-                    <label for="description" class="col-form-label">Comments:</label>
-                    <textarea class="form-control" id="user-comment" name="user-comment" readonly></textarea>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-outline-warning text-dark" data-bs-dismiss="modal" id="button-close">Ok</button>
-        </div>
+                    <div class="mb-3 mt-3">
+                        <label for="description" class="col-form-label">Comments:</label>
+                        <textarea class="form-control" id="comment" name="comment"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="button-close">Cancel</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="button-add">Create</button>
+            </div>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    async function getAllReviews() {
-        return fetch("{% url 'review:get_reviews_json_by_book_id' book.pk%}").then((res) => res.json())
-    }
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Edit Review</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>  
+            <div class="modal-body">
+                <form id="form-edit" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="star-widget" style="direction: rtl; text-align: center;">
+                        <input class="form-check-input d-none" type="radio" name="new-rating" id="new-rating5" value="5">
+                        <label class="form-check-label fas fa-star cursor-pointer" for="new-rating5" title="Excellent"></label>
 
-    function reviewSize() {
-        getAllReviews().then((reviews) => {
-            const reviewCount = document.getElementById("review-count");
-            reviewCount.innerHTML = `${reviews.length}`
-            console.log(reviews.length)
-        })
-    }
+                        <input class="form-check-input d-none" type="radio" name="new-rating" id="new-rating4" value="4">
+                        <label class="form-check-label fas fa-star cursor-pointer" for="new-rating4" title="Good"></label>
 
-    reviewSize()
+                        <input class="form-check-input d-none" type="radio" name="new-rating" id="new-rating3" value="3">
+                        <label class="form-check-label fas fa-star cursor-pointer" for="new-rating3" title="Average"></label>
 
-    function sizePerRating() {
-        let persen5 = 0
-        let persen4 = 0
-        let persen3 = 0
-        let persen2 = 0
-        let persen1 = 0
+                        <input class="form-check-input d-none" type="radio" name="new-rating" id="new-rating2" value="2">
+                        <label class="form-check-label fas fa-star cursor-pointer" for="new-rating2" title="Below Average"></label>
+                        
+                        <input class="form-check-input d-none" type="radio" name="new-rating" id="new-rating1" value="1">
+                        <label class="form-check-label fas fa-star cursor-pointer" for="new-rating1" title="Bad"></label>
+                        
+                    </div>
 
-        let jumlah5 = 0
-        let jumlah4 = 0
-        let jumlah3 = 0
-        let jumlah2 = 0
-        let jumlah1 = 0
-        let total = 0
-        getAllReviews().then((reviews) => {
-            total = reviews.length
+                    <div class="mb-3 mt-3">
+                        <label for="description" class="col-form-label">Comments:</label>
+                        <textarea class="form-control" id="new-comment" name="new-comment"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="button-close-edit">Cancel</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="button-update">Edit</button>
+            </div>
+            </div>
+        </div>
+    </div>
 
-            reviews.forEach((review) => {
-                if (review.fields.rating === 5) {
-                    jumlah5++;
+    <div class="modal fade" id="myReviewModal" tabindex="-1" aria-labelledby="myReviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myReviewModalLabel">Your Review</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>  
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    <p id="user-created-on" style="text-align: left;" class="pb-2 text-secondary">
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <h1 class="pe-2">
+                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                        </h1>
+                        <div>
+                            <h5 id="rating-from-user"></h5>
+                            <p id="user-rating-status"></p>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label for="description" class="col-form-label">Comments:</label>
+                        <textarea class="form-control" id="user-comment" name="user-comment" readonly></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-warning text-dark" data-bs-dismiss="modal" id="button-close">Ok</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function getAllReviews() {
+            return fetch("{% url 'review:get_reviews_json_by_book_id' book.pk%}").then((res) => res.json())
+        }
+
+        function reviewSize() {
+            getAllReviews().then((reviews) => {
+                const reviewCount = document.getElementById("review-count");
+                reviewCount.innerHTML = `${reviews.length}`
+                console.log(reviews.length)
+            })
+        }
+
+        reviewSize()
+
+        function sizePerRating() {
+            let persen5 = 0
+            let persen4 = 0
+            let persen3 = 0
+            let persen2 = 0
+            let persen1 = 0
+
+            let jumlah5 = 0
+            let jumlah4 = 0
+            let jumlah3 = 0
+            let jumlah2 = 0
+            let jumlah1 = 0
+            let total = 0
+            getAllReviews().then((reviews) => {
+                total = reviews.length
+
+                reviews.forEach((review) => {
+                    if (review.fields.rating === 5) {
+                        jumlah5++;
+                    }
+                    if (review.fields.rating === 4) {
+                        jumlah4++;
+                    }
+                    if (review.fields.rating === 3) {
+                        jumlah3++;
+                    }
+                    if (review.fields.rating === 2) {
+                        jumlah2++;
+                    }
+                    if (review.fields.rating === 1) {
+                        jumlah1++;
+                    }
+                });
+
+                if (jumlah5 !== 0) {
+                    persen5 = (jumlah5 / total) * 100
+                } else {
+                    persen5 = 0
                 }
-                if (review.fields.rating === 4) {
-                    jumlah4++;
-                }
-                if (review.fields.rating === 3) {
-                    jumlah3++;
-                }
-                if (review.fields.rating === 2) {
-                    jumlah2++;
-                }
-                if (review.fields.rating === 1) {
-                    jumlah1++;
-                }
-            });
 
-            if (jumlah5 !== 0) {
-                persen5 = (jumlah5 / total) * 100
+                if (jumlah4 !== 0) {
+                    persen4 = (jumlah4 / total) * 100
+                } else {
+                    persen4 = 0
+                }
+
+                if (jumlah3 !== 0) {
+                    persen3 = (jumlah3 / total) * 100
+                } else {
+                    persen3 = 0
+                }
+
+                if (jumlah2 !== 0) {
+                    persen2 = (jumlah2 / total) * 100
+                } else {
+                    persen2 = 0
+                }
+
+                if (jumlah1 !== 0) {
+                    persen1 = (jumlah1 / total) * 100
+                } else {
+                    persen1 = 0
+                }
+
+                document.getElementById("jumlah-5").innerHTML = `5 / 5 (Excellent) ${jumlah5} (${persen5}%)`
+                document.getElementById("jumlah-4").innerHTML = `4 / 5 (Good) ${jumlah4} (${persen4}%)`
+                document.getElementById("jumlah-3").innerHTML = `3 / 5 (Average) ${jumlah3} (${persen3}%)`
+                document.getElementById("jumlah-2").innerHTML = `2 / 5 (Below Average) ${jumlah2} (${persen2}%)`
+                document.getElementById("jumlah-1").innerHTML = `1 / 5 (Bad) ${jumlah1} (${persen1}%)`
+            })
+        }
+
+        sizePerRating()
+
+        async function getReviews() {
+            return fetch("{% url 'review:get_others_reviews_json' book.pk %}").then((res) => res.json())
+        }
+
+        async function getMyReview() {
+            return fetch("{% url 'review:get_reviews_json_by_request_id' book.pk %}").then((res) => res.json())
+        }
+
+        async function getBookRating() {
+            return fetch("{% url 'review:get_book_rating_by_book_id' book.pk %}").then((res) => res.json())
+        }
+
+        async function refreshBookRating() {
+            document.getElementById("rating-of-book").innerHTML = ""
+            const rating = await getBookRating()
+            let htmlString = ""
+            rating.forEach((rating, index, array) => {
+                htmlString += `\n
+                ${rating.fields.rating} / 5`
+            })
+            document.getElementById("rating-of-book").innerHTML = htmlString
+        }
+
+        refreshBookRating()
+
+        async function refreshMyReviews() {
+            document.getElementById("user-action").innerHTML = ""
+            const reviews = await getMyReview()
+
+            let htmlString = ""
+            if (reviews.length <= 0) {
+                htmlString += `\n 
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Create Your Review
+                </button>
+                <a class="btn btn-outline-primary" href="{% url 'review:add_review' book.pk %}">
+                    Create Your Review In Another Page
+                </a>
+                `
+
+                document.getElementById("rating-of-book-user").innerHTML = "? / 5"
+                document.getElementById("user-star").setAttribute("style", "color: #212529;")
             } else {
-                persen5 = 0
+                reviews.forEach((review, index, array) => {
+                    var date = new Date(review.fields.date)
+                    htmlString += `\n
+                    <p class="d-inline-flex gap-1">
+                        <button type="button" class="btn btn-outline-warning text-dark" data-bs-toggle="modal" data-bs-target="#myReviewModal">
+                            Your Review
+                        </button>
+                        <button onclick="deleteReview(${review.pk}); return false;" type="submit" class="btn btn-outline-danger" id="button-delete">Delete</button>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateModal">Edit</button>
+                    </p>`
+
+                    let rating = review.fields.rating
+                    if (rating === 5) {
+                        document.getElementById("user-rating-status").innerHTML = "Excellent"
+                        document.getElementById("user-rating-status").setAttribute("style", "color: #377E47;")
+                    } else if (rating === 4) {
+                        document.getElementById("user-rating-status").innerHTML = "Good"
+                        document.getElementById("user-rating-status").setAttribute("style", "color: #A1FA4F;")
+                    } else if (rating === 3) {
+                        document.getElementById("user-rating-status").innerHTML = "Average"
+                        document.getElementById("user-rating-status").setAttribute("style", "color: #FFFD55;")
+                    } else if (rating === 2) {
+                        document.getElementById("user-rating-status").innerHTML = "Below Average"
+                        document.getElementById("user-rating-status").setAttribute("style", "color: #F08784;")
+                    } else {
+                        document.getElementById("user-rating-status").innerHTML = "Bad"
+                        document.getElementById("user-rating-status").setAttribute("style", "color: #EB3324;")
+                    }
+
+                    document.getElementById("user-created-on").innerHTML = `Created/Edited on: <br> ${date}`
+                    document.getElementById("rating-of-book-user").innerHTML = `${review.fields.rating} / 5`
+                    document.getElementById("rating-from-user").innerHTML = `${review.fields.rating} / 5`
+                    document.getElementById("user-star").setAttribute("style", "color: #fd4;")
+                    document.getElementById("user-comment").value = `${review.fields.comment}`
+                    document.getElementById("button-update").setAttribute('onclick', `updateReview(${review.pk}); return false;`)
+                });
             }
 
-            if (jumlah4 !== 0) {
-                persen4 = (jumlah4 / total) * 100
-            } else {
-                persen4 = 0
-            }
+            document.getElementById("user-action").innerHTML = htmlString;
+        }
 
-            if (jumlah3 !== 0) {
-                persen3 = (jumlah3 / total) * 100
-            } else {
-                persen3 = 0
-            }
+        refreshMyReviews()
 
-            if (jumlah2 !== 0) {
-                persen2 = (jumlah2 / total) * 100
-            } else {
-                persen2 = 0
-            }
-
-            if (jumlah1 !== 0) {
-                persen1 = (jumlah1 / total) * 100
-            } else {
-                persen1 = 0
-            }
-
-            document.getElementById("jumlah-5").innerHTML = `5 / 5 (Excellent) ${jumlah5} (${persen5}%)`
-            document.getElementById("jumlah-4").innerHTML = `4 / 5 (Good) ${jumlah4} (${persen4}%)`
-            document.getElementById("jumlah-3").innerHTML = `3 / 5 (Average) ${jumlah3} (${persen3}%)`
-            document.getElementById("jumlah-2").innerHTML = `2 / 5 (Below Average) ${jumlah2} (${persen2}%)`
-            document.getElementById("jumlah-1").innerHTML = `1 / 5 (Bad) ${jumlah1} (${persen1}%)`
-        })
-    }
-
-    sizePerRating()
-
-    async function getReviews() {
-        return fetch("{% url 'review:get_others_reviews_json' book.pk %}").then((res) => res.json())
-    }
-
-    async function getMyReview() {
-        return fetch("{% url 'review:get_reviews_json_by_request_id' book.pk %}").then((res) => res.json())
-    }
-
-    async function getBookRating() {
-        return fetch("{% url 'review:get_book_rating_by_book_id' book.pk %}").then((res) => res.json())
-    }
-
-    async function refreshBookRating() {
-        document.getElementById("rating-of-book").innerHTML = ""
-        const rating = await getBookRating()
-        let htmlString = ""
-        rating.forEach((rating, index, array) => {
-            htmlString += `\n
-            ${rating.fields.rating} / 5`
-        })
-        document.getElementById("rating-of-book").innerHTML = htmlString
-    }
-
-    refreshBookRating()
-
-    async function refreshMyReviews() {
-        document.getElementById("user-action").innerHTML = ""
-        const reviews = await getMyReview()
-
-        let htmlString = ""
-        if (reviews.length <= 0) {
-            htmlString += `\n 
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Create Your Review
-            </button>
-            <a class="btn btn-outline-primary" href="{% url 'review:add_review' book.pk %}">
-                Create Your Review In Another Page
-            </a>
-            `
-
-            document.getElementById("rating-of-book-user").innerHTML = "? / 5"
-            document.getElementById("user-star").setAttribute("style", "color: #212529;")
-        } else {
+        async function refreshReviews() {
+            document.getElementById("review-card").innerHTML = ""
+            const reviews = await getReviews()
+            let htmlString = ""
             reviews.forEach((review, index, array) => {
                 var date = new Date(review.fields.date)
                 htmlString += `\n
-                <p class="d-inline-flex gap-1">
-                    <button type="button" class="btn btn-outline-warning text-dark" data-bs-toggle="modal" data-bs-target="#myReviewModal">
-                        Your Review
-                    </button>
-                    <button onclick="deleteReview(${review.pk}); return false;" type="submit" class="btn btn-outline-danger" id="button-delete">Delete</button>
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateModal">Edit</button>
-                </p>`
-
-                let rating = review.fields.rating
-                if (rating === 5) {
-                    document.getElementById("user-rating-status").innerHTML = "Excellent"
-                    document.getElementById("user-rating-status").setAttribute("style", "color: #377E47;")
-                } else if (rating === 4) {
-                    document.getElementById("user-rating-status").innerHTML = "Good"
-                    document.getElementById("user-rating-status").setAttribute("style", "color: #A1FA4F;")
-                } else if (rating === 3) {
-                    document.getElementById("user-rating-status").innerHTML = "Average"
-                    document.getElementById("user-rating-status").setAttribute("style", "color: #FFFD55;")
-                } else if (rating === 2) {
-                    document.getElementById("user-rating-status").innerHTML = "Below Average"
-                    document.getElementById("user-rating-status").setAttribute("style", "color: #F08784;")
-                } else {
-                    document.getElementById("user-rating-status").innerHTML = "Bad"
-                    document.getElementById("user-rating-status").setAttribute("style", "color: #EB3324;")
-                }
-
-                document.getElementById("user-created-on").innerHTML = `Created/Edited on: <br> ${date}`
-                document.getElementById("rating-of-book-user").innerHTML = `${review.fields.rating} / 5`
-                document.getElementById("rating-from-user").innerHTML = `${review.fields.rating} / 5`
-                document.getElementById("user-star").setAttribute("style", "color: #fd4;")
-                document.getElementById("user-comment").value = `${review.fields.comment}`
-                document.getElementById("button-update").setAttribute('onclick', `updateReview(${review.pk}); return false;`)
-            });
-        }
-
-        document.getElementById("user-action").innerHTML = htmlString;
-    }
-
-    refreshMyReviews()
-
-    async function refreshReviews() {
-        document.getElementById("review-card").innerHTML = ""
-        const reviews = await getReviews()
-        let htmlString = ""
-        reviews.forEach((review, index, array) => {
-            var date = new Date(review.fields.date)
-            htmlString += `\n
-            <div class="my-2">
-            <div class="card w-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h5 class="card-title">
-                            <i class="fa fa-user pe-2" aria-hidden="true"></i>
-                            ${review.fields.reviewer}
-                        </h5>
-                        <div>
-                        <p style="text-align: right;">
-                            ${date.getDay()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}
-                        </p>
-                        </div>
-                    </div>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                        <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                        ${review.fields.rating}
-                    </h6>
-                    <p class="card-text">${review.fields.comment}</p>
-                </div>
-            </div>
-            </div>`
-        });
-        document.getElementById("review-card").innerHTML = htmlString;
-    }
-
-    refreshReviews()
-
-    async function refreshReviewsByRating(rating) {
-        document.getElementById("review-card").innerHTML = "";
-        const reviews = await getAllReviews();
-        let htmlString = "";
-        reviews.forEach((review, index, array) => {
-            if (review.fields.rating === rating) {
-                var date = new Date(review.fields.date);
-                htmlString += `\n
                 <div class="my-2">
-                    <div class="card w-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="card-title">
-                                    <i class="fa fa-user pe-2" aria-hidden="true"></i>
-                                    ${review.fields.reviewer}
-                                </h5>
-                                <p style="text-align: right;">
-                                    ${date.getDay()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}
-                                </p>
+                <div class="card w-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">
+                                <i class="fa fa-user pe-2" aria-hidden="true"></i>
+                                ${review.fields.reviewer}
+                            </h5>
+                            <div>
+                            <p style="text-align: right;">
+                                ${date.getDay()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}
+                            </p>
                             </div>
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
-                                ${review.fields.rating}
-                            </h6>
-                            <p class="card-text">${review.fields.comment}</p>
                         </div>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                            ${review.fields.rating}
+                        </h6>
+                        <p class="card-text">${review.fields.comment}</p>
                     </div>
-                </div>`;
+                </div>
+                </div>`
+            });
+            document.getElementById("review-card").innerHTML = htmlString;
+        }
+
+        refreshReviews()
+
+        async function refreshReviewsByRating(rating) {
+            document.getElementById("review-card").innerHTML = "";
+            const reviews = await getAllReviews();
+            let htmlString = "";
+            reviews.forEach((review, index, array) => {
+                if (review.fields.rating === rating) {
+                    var date = new Date(review.fields.date);
+                    htmlString += `\n
+                    <div class="my-2">
+                        <div class="card w-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="card-title">
+                                        <i class="fa fa-user pe-2" aria-hidden="true"></i>
+                                        ${review.fields.reviewer}
+                                    </h5>
+                                    <p style="text-align: right;">
+                                        ${date.getDay()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}
+                                    </p>
+                                </div>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <i class="fas fa-star pe-1" aria-hidden="true" style="color: #fd4;"></i>
+                                    ${review.fields.rating}
+                                </h6>
+                                <p class="card-text">${review.fields.comment}</p>
+                            </div>
+                        </div>
+                    </div>`;
+                }
+            });
+            document.getElementById("review-card").innerHTML = htmlString;
+        }
+
+        // refreshReviewsByRating();
+
+        function addReview() {
+            var rating = document.querySelector('input[name="rating"]:checked');
+            if (!rating) {
+                alert("Please rate the book before submitting.");
+                return false;
             }
-        });
-        document.getElementById("review-card").innerHTML = htmlString;
-    }
 
-    // refreshReviewsByRating();
+            var comment = document.querySelector('textarea[name="comment"]').value;
 
-    function addReview() {
-        var rating = document.querySelector('input[name="rating"]:checked');
-        if (!rating) {
-            alert("Please rate the book before submitting.");
-            return false;
-        }
-
-        var comment = document.querySelector('textarea[name="comment"]').value;
-
-        fetch("{% url 'review:create_review_ajax' book_id=book.pk %}", {
-            method: "POST",
-            body: JSON.stringify({ rating: rating.value, comment: comment }),
-        }).then(() => {
-            refreshReviews();
-            refreshMyReviews();
-            refreshBookRating();
-            reviewSize();
-            sizePerRating();
-            refreshReviewsByRating();
-        })
-
-        document.getElementById("form").reset()
-        return false
-    }
-
-    document.getElementById("button-add").onclick = addReview
-
-    function closeModal() {
-        document.getElementById("form").reset()
-        return false
-    }
-
-    document.getElementById("button-close").onclick = closeModal
-
-    function closeEditModal() {
-        document.getElementById("form-edit").reset()
-        return false
-    }
-
-    document.getElementById("button-close-edit").onclick = closeEditModal
-
-    function deleteReview(reviewId) {
-        fetch(`${window.location.origin}/review/delete-review-ajax/${reviewId}/`, {
-            method: "DELETE",
-        }).then(() => {
-            refreshReviews();
-            refreshMyReviews();
-            refreshBookRating();
-            reviewSize();
-            sizePerRating();
-            refreshReviewsByRating();
-        })
-
-        return false
-    }
-
-    function updateReview(reviewId) {
-        const newRating = document.querySelector('input[name="new-rating"]:checked');
-        const newComment = document.getElementById('new-comment').value;
-
-        var newRatingValue = null;
-        if (newRating === null) {
-            newRatingValue = null
-        } else {
-            newRatingValue = newRating.value
-        }
-
-        console.log(newRatingValue)
-        const data = {
-            rating: newRatingValue,
-            comment: newComment
-        };
-
-        fetch(`${window.location.origin}/review/update-review-ajax/${reviewId}/`, {
-            method: "PATCH",
-            body: JSON.stringify(data)
-        }).then(() => {
+            fetch("{% url 'review:create_review_ajax' book_id=book.pk %}", {
+                method: "POST",
+                body: JSON.stringify({ rating: rating.value, comment: comment }),
+            }).then(() => {
                 refreshReviews();
                 refreshMyReviews();
                 refreshBookRating();
                 reviewSize();
                 sizePerRating();
                 refreshReviewsByRating();
-            }   
-        )
+            })
 
-        return false;
-    }
-</script>
+            document.getElementById("form").reset()
+            return false
+        }
 
-{% endblock content %}
+        document.getElementById("button-add").onclick = addReview
+
+        function closeModal() {
+            document.getElementById("form").reset()
+            return false
+        }
+
+        document.getElementById("button-close").onclick = closeModal
+
+        function closeEditModal() {
+            document.getElementById("form-edit").reset()
+            return false
+        }
+
+        document.getElementById("button-close-edit").onclick = closeEditModal
+
+        function deleteReview(reviewId) {
+            fetch(`${window.location.origin}/review/delete-review-ajax/${reviewId}/`, {
+                method: "DELETE",
+            }).then(() => {
+                refreshReviews();
+                refreshMyReviews();
+                refreshBookRating();
+                reviewSize();
+                sizePerRating();
+                refreshReviewsByRating();
+            })
+
+            return false
+        }
+
+        function updateReview(reviewId) {
+            const newRating = document.querySelector('input[name="new-rating"]:checked');
+            const newComment = document.getElementById('new-comment').value;
+
+            var newRatingValue = null;
+            if (newRating === null) {
+                newRatingValue = null
+            } else {
+                newRatingValue = newRating.value
+            }
+
+            console.log(newRatingValue)
+            const data = {
+                rating: newRatingValue,
+                comment: newComment
+            };
+
+            fetch(`${window.location.origin}/review/update-review-ajax/${reviewId}/`, {
+                method: "PATCH",
+                body: JSON.stringify(data)
+            }).then(() => {
+                    refreshReviews();
+                    refreshMyReviews();
+                    refreshBookRating();
+                    reviewSize();
+                    sizePerRating();
+                    refreshReviewsByRating();
+                }   
+            )
+
+            return false;
+        }
+    </script>
+
+{% endblock content-2 %}

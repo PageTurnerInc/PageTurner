@@ -8,13 +8,13 @@ from rak_buku.models import Rak
 from main.models import Account
 from django.urls import reverse
 
-
-
 def show_katalog(request):
     books = Book.objects.all()
+    account = Account.objects.get(user=request.user)
 
     context = {
         'books': books,
+        'account': account,
     }
     
     return render(request, "katalog_buku.html", context)
@@ -44,7 +44,7 @@ def add_book_katalog(request):
         book_author = request.POST.get("author")
         year_of_publication = request.POST.get("year")
         publisher = request.POST.get("publisher")
-        image = request.POST.get("image")
+        image = request.POST.get("image-url")
         user = Account.objects.get(user=request.user)
 
         new_book = Book(isbn=isbn, book_title=book_title, book_author=book_author, year_of_publication=year_of_publication, publisher=publisher, image_url_s=image, image_url_m=image, image_url_l=image, user=user)
@@ -66,6 +66,7 @@ def get_product_json(request):
     books = Book.objects.all()
     return HttpResponse(serializers.serialize('json', books))
 
+# SALSA
 def add_book_to_rak(request, id, rak_id):
     book = Book.objects.get(pk=id)
     rak = Rak.objects.get(pk=rak_id)

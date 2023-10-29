@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <style>
+        .navbar-nav .nav-item a:hover {
+            color: blue;
+        }
+    </style>
+    {% block meta-2 %}
+    {% endblock meta-2 %}
+{% endblock meta %}
+
+{% block content %}
+<!-- NavBar -->
+<nav class="navbar navbar-expand-lg bg-light bg-gradient fixed-top">
+    <div class="container-fluid mx-5">
+        <span class="navbar-brand mb-0 h1">PageTurner</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active mb-0" href="{% url 'katalog_buku:show_katalog' %}">Catalogue</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active mb-0" href="{% url 'daftar_belanja:owned_books' %}">My Books</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active mb-0" href="{% url 'daftar_belanja:shopping_cart' %}">Shopping Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active mb-0" href="{% url 'rak_buku:show_rak' %}">Library</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active mb-0" href="{% url 'wishlist:show_wishlist' %}">Wishlist</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                {% block content-3 %}
+                {% endblock content-3 %}
+                <li class="nav-item">
+                    <a class="nav-link active mb-0" href="{% url 'main:logout_user' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% block content-2 %}
+{% endblock content-2 %}
+{% endblock content %}
