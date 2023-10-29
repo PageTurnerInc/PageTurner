@@ -78,31 +78,32 @@
         }
 
         async function refreshWishlist() {
-        const cardContainer = document.getElementById("wishlist-items");
-        cardContainer.innerHTML = "";
+            const cardContainer = document.getElementById("wishlist-items");
+            cardContainer.innerHTML = "";
 
-        const books = await getWishlistItems();
-        console.log(books)
-        
+            const books = await getWishlistItems();
+            console.log(books)
+            
 
-        books.forEach((book) => {
-            cardContainer.innerHTML += `
-            <div class="col-md-4 mb-4">
-                <div class="card" style="width: 400px;">
-                    <img src="${book.image_url_l}" class="card-img-top" alt="${book.book_title}" style="max-height: 400px;">
-                    <div class="card-body">
-                        <h5 class="card-title">${book.book_title}</h5>
-                        <p class="card-text">Author: ${book.book_author}</p>
-                        <p class="card-text">Year of Publication: ${book.year_of_publication}</p>
-                        <p class="card-text">Publisher: ${book.publisher}</p>
-                        <button class="btn btn-danger" onclick="deleteItem(${book.pk})">Delete</button>
+            books.forEach((book) => {
+                cardContainer.innerHTML += `
+                    <div class="col-md-4 mb-4">
+                        <div class="card" style="width: 400px;">
+                            <img src="${book.image_url_l}" class="card-img-top" alt="${book.book_title}" style="max-height: 400px;">
+                            <div class="card-body">
+                                <h5 class="card-title">${book.book_title}</h5>
+                                <p class="card-text">Author: ${book.book_author}</p>
+                                <p class="card-text">Year of Publication: ${book.year_of_publication}</p>
+                                <p class="card-text">Publisher: ${book.publisher}</p>
+                                <button class="btn btn-danger" onclick="deleteItem(${book.pk})">Delete</button>
 
-                    </div>
-                </div>
-            </div>`;
-        });
-    }
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }   
 
+        refreshWishlist();
 
         function deleteItem(bookId) {
             fetch(`{% url 'wishlist:delete_book' 0 %}`.replace("0", bookId), {
