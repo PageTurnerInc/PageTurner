@@ -60,7 +60,3 @@ def create_account(request):
     
     context = {'form': form}
     return render(request, 'create_account.html', context)
-
-# def get_accounts_json(request):
-#     data = Account.objects.all()
-#     return HttpResponse(serializers.serialize("json", data), content_type="application/json")

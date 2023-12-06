@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.http import JsonResponse
@@ -53,3 +54,27 @@ def logout(request):
         "status": False,
         "message": "Logout gagal."
         }, status=401)
+    
+@csrf_exempt
+def register_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        user = User.objects.create_user(
+            username = data["username"],
+            email = data["email"],
+            password = data["password"],
+        )
+        user.save()
+
+        account = Account.objects.create(
+            user = user,
+            full_name = data["full_name"],
+            email = data["email"],
+            is_premium = data["is_premium"],
+        )
+        account.save()
+
+        return JsonResponse({"status": True,}, status=200)
+    
+    return JsonResponse({"status": False}, status=500)
