@@ -60,10 +60,12 @@ def register_flutter(request):
     if request.method == 'POST':
         data = json.loads(request.body)
 
+        is_premium = "Y" if data['is_premium'] == "Yes" else "N"
+
         user = User.objects.create_user(
             username = data["username"],
             email = data["email"],
-            password = data["password"],
+            password1 = data["password"],
         )
         user.save()
 
@@ -71,7 +73,7 @@ def register_flutter(request):
             user = user,
             full_name = data["full_name"],
             email = data["email"],
-            is_premium = data["is_premium"],
+            is_premium = is_premium,
         )
         account.save()
 
