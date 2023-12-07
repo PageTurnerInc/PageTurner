@@ -195,6 +195,49 @@ def create_review_ajax(request, book_id):
     return HttpResponseNotFound()
 
 @csrf_exempt
+@login_required(login_url='/auth/login')
+def create_review_flutter(request, book_id):
+    if request.method == 'POST':
+        # print(request.POST)
+        # print(request.POST.get("rating"))
+        user = request.user
+        book = get_object_or_404(Book, pk=book_id)
+        data = json.loads(request.body)
+        rating = int(data.get('rating'))
+        comment = data.get('comment')
+        reviewer = request.user.username
+        date = datetime.now()
+
+        if comment == "":
+            comment = ""
+
+        new_review = Review(user=user, book=book, reviewer=reviewer, rating=rating, comment=comment, date=date)
+
+        try:
+            new_review.full_clean()
+        except ValidationError as e:
+            return HttpResponse(str(e), status=400)
+
+        new_review.save()
+
+        book_rating, created = BookRating.objects.get_or_create(book=book)
+        print(book_rating)
+        if not created:
+            total_reviews = Review.objects.filter(book=book).count()
+            total_ratings = float(sum([review.rating for review in Review.objects.filter(book=book)]))
+            if total_reviews != 0:
+                book_rating.rating = total_ratings / total_reviews
+            else:
+                book_rating.rating = float(new_review.rating)
+        else:
+            book_rating.rating = new_review.rating
+
+        book_rating.save()
+
+        return JsonResponse({"status": "success"}, status=201)
+    return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
 @login_required(login_url='/login')
 def delete_review_ajax(request, review_id):
     if request.method == 'DELETE':
