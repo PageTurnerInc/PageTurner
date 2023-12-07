@@ -13,5 +13,7 @@ urlpatterns = [
     path('get-reviews-json-by-request-id/<int:book_id>/', get_reviews_json_by_request_id, name="get_reviews_json_by_request_id"),
     path('get-others-reviews-json/<int:book_id>/', get_others_reviews_json, name="get_others_reviews_json"),
     path('get-book-rating-by-book-id/<int:book_id>/', get_book_rating_by_book_id, name="get_book_rating_by_book_id"),
-    path('add-review/<int:book_id>/', add_review, name="add_review")
+    path('add-review/<int:book_id>/', add_review, name="add_review"),
+    path('get-book-ratings/', get_book_ratings, name="get_book_ratings"),
+    path('get-rating-percentage/<int:book_id>/<int:target_rating>/', get_rating_percentage, name="get_rating_percentage")
 ]
