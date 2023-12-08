@@ -268,7 +268,7 @@ def delete_review_ajax(request, review_id):
 def post_delete_review_flutter(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        review = get_object_or_404(Review, pk=int(data["review_id"]))
+        review = get_object_or_404(Review, pk=int(data["review-id"]))
 
         if request.user == review.user:
             book = review.book
