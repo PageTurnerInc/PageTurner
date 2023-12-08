@@ -288,6 +288,7 @@ def post_delete_review_flutter(request):
                 book_rating.delete()
 
             return JsonResponse({"status": "success"}, status=204)
+        return HttpResponse("Unauthorized", status=401) 
     return JsonResponse({"status": "error"}, status=401)
 
 @csrf_exempt
