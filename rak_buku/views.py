@@ -105,3 +105,57 @@ def delete_rak(request, id):
         rak.delete()
 
         return HttpResponseRedirect(reverse('rak_buku:show_rak'))
+
+@csrf_exempt
+def add_rak_flutter(request):
+    if request.method == 'POST':
+        body_unicode = request.body.decode("utf-8")
+        data = json.loads(body_unicode)      
+        account = Account.objects.get(user=request.user)
+        new_rak = Rak(**data, user=account)
+        new_rak.save()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+    
+def edit_rak_flutter(request, id):
+    rak = Rak.objects.get(pk=id)
+
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        user = Account.objects.get(user=request.user)
+
+        rak.name = name
+        rak.description = description
+        rak.save()
+
+        return HttpResponseRedirect(reverse('rak_buku:show_rak_by_id', args=[id]))
+    return HttpResponseNotFound()
+
+@csrf_exempt
+def remove_book_from_rak_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        bookID = data["bookID"]
+        rakID = data["rakID"]
+
+        rak = Rak.objects.get(pk=rakID)
+        book = Book.objects.get(pk=bookID)
+        rak.books.remove(book)
+        return JsonResponse({"status": True,}, status=200)
+    
+    return JsonResponse({"status": False}, status=500)
+
+@csrf_exempt
+def remove_rak_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        rakID = data["rakID"]
+
+        rak = Rak.objects.get(pk=rakID)
+        rak.delete()
+        return JsonResponse({"status": True,}, status=200)
+    
+    return JsonResponse({"status": False}, status=500)
