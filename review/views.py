@@ -265,6 +265,33 @@ def delete_review_ajax(request, review_id):
 
 @csrf_exempt
 @login_required(login_url='/auth/login')
+def post_delete_review_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        review = get_object_or_404(Review, pk=int(data["review_id"]))
+
+        if request.user == review.user:
+            book = review.book
+
+            review.delete()
+
+            book_rating = BookRating.objects.get(book=book)
+            total_reviews = Review.objects.filter(book=book).count()
+            if total_reviews > 0:
+                total_ratings = sum([review.rating for review in Review.objects.filter(book=book)])
+                book_rating.rating = total_ratings / total_reviews
+                book_rating.save()
+            else:
+                book_rating.rating = 0
+                book_rating.delete()
+
+            return JsonResponse({"status": "success"}, status=204)
+        else:
+            return JsonResponse({"status": "unauthorized"}, status=401) 
+    return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+@login_required(login_url='/auth/login')
 def delete_review_flutter(request, review_id):
     if request.method == 'DELETE':
         review = get_object_or_404(Review, pk=review_id)
