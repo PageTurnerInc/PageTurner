@@ -269,10 +269,11 @@ def post_delete_review_flutter(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         review_id = data["review-id"]
+        book_id = data["book-id"]
         review = get_object_or_404(Review, pk=review_id)
 
         if request.user == review.user:
-            book = review.book
+            book = get_object_or_404(Book, pk=book_id)
 
             review.delete()
 
