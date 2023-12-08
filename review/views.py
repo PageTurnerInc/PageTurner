@@ -333,7 +333,7 @@ def update_review_ajax(request, review_id):
 @csrf_exempt
 @login_required(login_url='/auth/login')
 def update_review_flutter(request, review_id):
-    if request.method == 'PATCH':
+    if request.method == 'POST':
         data = json.loads(request.body)
         print(data)
         new_rating = data.get('rating')
