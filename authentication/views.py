@@ -62,14 +62,14 @@ def register_flutter(request):
 
         is_premium = "Y" if data['is_premium'] == "Yes" else "N"
 
-        user = User.objects.create_user(
+        user = User(
             username = data["username"],
             email = data["email"],
-            password1 = data["password"],
+            password = data["password"],
         )
         user.save()
 
-        account = Account.objects.create(
+        account = Account(
             user = user,
             full_name = data["full_name"],
             email = data["email"],
