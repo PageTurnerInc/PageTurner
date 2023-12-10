@@ -98,9 +98,9 @@ def add_to_cart_flutter(request):
         account = Account.objects.get(user=request.user)
         cart, created = ShoppingCart.objects.get_or_create(account=account)
         book = Book.objects.get(pk=bookID)
-        cart.cart.add(book)
-
-        return JsonResponse({"status": True,}, status=200)
+        if book not in cart.cart.all() and book not in cart.owned_books.all():
+            cart.cart.add(book)
+            return JsonResponse({"status": True,}, status=200)
     
     return JsonResponse({"status": False}, status=500)
 
