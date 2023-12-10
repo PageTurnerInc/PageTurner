@@ -180,20 +180,26 @@ def confirm_payment_flutter(request):
         receiverName = data["username"]
         payment = data["payment"]
 
-        receiver = User.objects.get(username = receiverName)
-        giver = Account.objects.get(user = request.user)
-        account = Account.objects.get(user = receiver)
-        receiver_cart, created = ShoppingCart.objects.get_or_create(account=account)
-        giver_cart, created = ShoppingCart.objects.get_or_create(account=giver)
-        for book in receiver_cart.cart.all():
-            receiver_cart.owned_books.add(book)
+        try:
+            receiver = User.objects.get(username = receiverName)
+            giver = Account.objects.get(user = request.user)
+            account = Account.objects.get(user = receiver)
+            receiver_cart, created = ShoppingCart.objects.get_or_create(account=account)
+            giver_cart, created = ShoppingCart.objects.get_or_create(account=giver)
+            for book in receiver_cart.cart.all():
+                receiver_cart.owned_books.add(book)
 
-        giver_cart.cart.clear()
-        
-        return JsonResponse({
-            "status": True,
-            "message": "Payment with {payment} is Successful!",
-        }, status=200)
+            giver_cart.cart.clear()
+            
+            return JsonResponse({
+                "status": True,
+                "message": "Payment with {payment} is Successful!",
+            }, status=200)
+        except User.DoesNotExist:
+            return JsonResponse({
+                "status": False,
+                "message": "Something went wrong, try again!",
+            }, status=500)
     
     return JsonResponse({
         "status": False,
