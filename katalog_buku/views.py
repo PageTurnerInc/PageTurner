@@ -70,7 +70,7 @@ def add_book_katalog_flutter(request):
             image_url_m = data["url"],
             image_url_l = data["url"],
 
-            user = request.user,
+            user = Account.objects.get(user=request.user)
         )
 
         new_book.save()
