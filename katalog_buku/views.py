@@ -1,6 +1,7 @@
+import json
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.core import serializers
 from django.http import HttpResponseRedirect
 from book.models import Book
@@ -53,6 +54,32 @@ def add_book_katalog(request):
         return HttpResponse(b"CREATED", status=201)
     
     return HttpResponseNotFound()
+
+@csrf_exempt
+def add_book_katalog_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        new_book = Book.objects.create(
+            isbn = data["isbn"],
+            book_title = data["title"],
+            book_author = data["author"],
+            year_of_publication = int(data["publication_year"]),
+            publisher = data["publisher"],
+            image_url_s = data["url"],
+            image_url_m = data["url"],
+            image_url_l = data["url"],
+
+            user = Account.objects.get(user=request.user)
+        )
+
+        new_book.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
 
 def delete_book_katalog(request, id):
     book = Book.objects.get(pk=id)

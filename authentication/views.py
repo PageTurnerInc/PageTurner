@@ -23,19 +23,19 @@ def login(request):
                 "email": account.email,
                 "isPremium": account.is_premium,
                 "status": True,
-                "message": "Login sukses!",
+                "message": "Login successful!",
                 # Tambahkan data lainnya jika ingin mengirim data ke Flutter.
             }, status=200)
         else:
             return JsonResponse({
                 "status": False,
-                "message": "Login gagal, akun dinonaktifkan."
+                "message": "Login failed!"
             }, status=401)
 
     else:
         return JsonResponse({
             "status": False,
-            "message": "Login gagal, periksa kembali email atau kata sandi."
+            "message": "Login failed!"
         }, status=401)
 
 @csrf_exempt   
@@ -62,14 +62,14 @@ def register_flutter(request):
 
         is_premium = "Y" if data['is_premium'] == "Yes" else "N"
 
-        user = User.objects.create_user(
+        user = User(
             username = data["username"],
             email = data["email"],
-            password1 = data["password"],
+            password = data["password"],
         )
         user.save()
 
-        account = Account.objects.create(
+        account = Account(
             user = user,
             full_name = data["full_name"],
             email = data["email"],

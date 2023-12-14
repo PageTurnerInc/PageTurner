@@ -264,6 +264,34 @@ def delete_review_ajax(request, review_id):
     return HttpResponseNotFound()
 
 @csrf_exempt
+@login_required(login_url='/auth/login')
+def delete_review_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        review_id = data["review-id"]
+        book_id = data["book-id"]
+        review = get_object_or_404(Review, pk=review_id)
+
+        if request.user == review.user:
+            book = get_object_or_404(Book, pk=book_id)
+
+            review.delete()
+
+            book_rating = BookRating.objects.get(book=book)
+            total_reviews = Review.objects.filter(book=book).count()
+            if total_reviews > 0:
+                total_ratings = sum([review.rating for review in Review.objects.filter(book=book)])
+                book_rating.rating = total_ratings / total_reviews
+                book_rating.save()
+            else:
+                book_rating.rating = 0
+                book_rating.delete()
+
+            return JsonResponse({"status": "success"}, status=204)
+        return JsonResponse({"status": "unauthorized"}, status=204)
+    return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
 @login_required(login_url='/login')
 def update_review_ajax(request, review_id):
     if request.method == 'PATCH':
@@ -301,3 +329,42 @@ def update_review_ajax(request, review_id):
         else:
             return HttpResponse("Unauthorized", status=401)
     return HttpResponseNotFound()
+
+@csrf_exempt
+@login_required(login_url='/auth/login')
+def update_review_flutter(request, review_id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print(data)
+        new_rating = data.get('rating')
+        new_comment = data.get('comment')
+
+        review = get_object_or_404(Review, pk=review_id)
+        book = review.book
+
+        print(book)
+        if request.user == review.user:
+            if new_rating is not None:
+                review.rating = int(new_rating)
+                review.date = datetime.now()
+                review.save()
+
+                book_rating = BookRating.objects.get(book=book)
+                total_reviews = Review.objects.filter(book=book).count()
+                total_ratings = sum([review.rating for review in Review.objects.filter(book=book)])
+                book_rating.rating = total_ratings / total_reviews
+
+                if total_reviews != 0:
+                    book_rating.rating = total_ratings / total_reviews
+                else:
+                    book_rating.rating = 0  # Set a default value if there are no reviews
+                book_rating.save()
+
+            if new_comment != '':
+                review.comment = new_comment
+                review.save()
+
+            return JsonResponse({"status": "success"}, status=200)
+        else:
+            return JsonResponse({"status": "unauthorized"}, status=401)
+    return JsonResponse({"status": "unauthorized"}, status=401)
