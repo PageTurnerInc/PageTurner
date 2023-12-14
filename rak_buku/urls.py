@@ -21,4 +21,5 @@ urlpatterns = [
     path('create-rak-flutter/', add_rak_flutter, name='add_rak_flutter'),
     path('remove_book_from_rak_flutter/', remove_book_from_rak_flutter, name='remove_book_from_rak_flutter'),
     path('remove_rak_flutter/', remove_rak_flutter, name='remove_rak_flutter'),
+    path('add_book_to_rak_flutter/', add_book_to_rak_flutter, name='add_book_to_rak_flutter'),
 ]

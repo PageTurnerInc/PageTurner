@@ -159,3 +159,19 @@ def remove_rak_flutter(request):
         return JsonResponse({"status": True,}, status=200)
     
     return JsonResponse({"status": False}, status=500)
+
+@csrf_exempt
+def add_book_to_rak_flutter(request):
+    if request.method == 'POST':
+            data = json.loads(request.body)
+
+            rakID = data["rakID"]
+            bookID = data["bookID"]
+
+            rak = Rak.objects.get(pk=rakID)
+            book = Book.objects.get(pk=bookID)
+
+            rak.books.add(book)
+            return JsonResponse({"status": True,}, status=200)
+    
+    return JsonResponse({"status": False}, status=500)
