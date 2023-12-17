@@ -60,7 +60,7 @@ def register_flutter(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
     email = request.POST.get('email')
-    is_premium = "Y" if request.POST.get("is-premium") == "Yes" else "N"
+    is_premium = "Y" if request.POST.get("is_premium") == "Yes" else "N"
     full_name = request.POST.get('fullname')
 
     if User.objects.filter(username=username).exists():
