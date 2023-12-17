@@ -57,26 +57,42 @@ def logout(request):
     
 @csrf_exempt
 def register_flutter(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    email = request.POST.get('email')
+    is_premium = "Y" if request.POST.get("is-premium") == "Yes" else "N"
+    full_name = request.POST.get('fullname')
 
-        is_premium = "Y" if data['is_premium'] == "Yes" else "N"
-
-        user = User(
-            username = data["username"],
-            email = data["email"],
-            password = data["password"],
-        )
-        user.save()
-
-        account = Account(
-            user = user,
-            full_name = data["full_name"],
-            email = data["email"],
-            is_premium = is_premium,
-        )
-        account.save()
-
-        return JsonResponse({"status": True,}, status=200)
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({"status": False, "message": "Username already used."}, status=400)
     
-    return JsonResponse({"status": False}, status=500)
+    user = User.objects.create_user(username=username, password=password, email=email)
+    user.save()
+
+    acc = Account(user = user, full_name=full_name, email=email, is_premium=is_premium)
+    acc.save()
+
+    return JsonResponse({"status": True,}, status=200)
+    # if request.method == 'POST':
+    #     data = json.loads(request.body)
+
+    #     is_premium = "Y" if data['is_premium'] == "Yes" else "N"
+
+    #     user = User(
+    #         username = data["username"],
+    #         email = data["email"],
+    #         password = data["password"],
+    #     )
+    #     user.save()
+
+    #     account = Account(
+    #         user = user,
+    #         full_name = data["full_name"],
+    #         email = data["email"],
+    #         is_premium = is_premium,
+    #     )
+    #     account.save()
+
+    #     return JsonResponse({"status": True,}, status=200)
+    
+    # return JsonResponse({"status": False}, status=500)
