@@ -106,7 +106,7 @@ def show_json(request):
 
 @csrf_exempt
 def remove_book_katalog_flutter(request):
-    if request.method == 'POST' and request.user == book.user:
+    if request.method == 'POST':
         data = json.loads(request.body)
         bookID = data["bookID"]
         book = Book.objects.get(pk=bookID)
