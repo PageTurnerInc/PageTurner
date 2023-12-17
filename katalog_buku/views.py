@@ -103,3 +103,14 @@ def add_book_to_rak(request, id, rak_id):
 def show_json(request):
     data = Book.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@csrf_exempt
+def remove_book_katalog_flutter(request):
+    if request.method == 'POST' and request.user == book.user:
+        data = json.loads(request.body)
+        bookID = data["bookID"]
+        book = Book.objects.get(pk=bookID)
+        book.delete()
+        return JsonResponse({"status": True,}, status=200)
+    
+    return JsonResponse({"status": False}, status=500)
